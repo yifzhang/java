@@ -2,7 +2,7 @@ package peiliping.cache;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class LRUCache {
@@ -11,9 +11,9 @@ public class LRUCache {
 	
 	public static final int DEFAULT_MAXSIZE = 1000 ;
 	
-	private long expiretime = 0 ; //有效时间
+	private AtomicLong expiretime = new AtomicLong(0) ; //有效时间
 	
-	private int maxsize = 0 ; //cache的大小
+	private AtomicInteger maxsize = new AtomicInteger(0) ; //cache的大小
 	
 	private LinkedHashMap<Object, CacheItem> cache ;
 	
@@ -30,17 +30,12 @@ public class LRUCache {
 	}
 
 	public LRUCache(int maxsize,long expiretime){
-		this.maxsize = maxsize;
-		this.expiretime = expiretime;
-		cache = new LinkedHashMap<Object, CacheItem>(maxsize, 0.75f, true){  
-			private static final long serialVersionUID = 1L;
-			protected boolean removeEldestEntry(Map.Entry<Object, CacheItem> eldest) {  
-				return size() > LRUCache.this.maxsize; 
-			}  
-		};  
+		configOnline(maxsize, expiretime); 
 	}
 	
-	public void clear() {  
+	public synchronized void clear() {  
+		in.set(0);
+		hit.set(0);
 		cache.clear();  
 	}  
 	
@@ -48,7 +43,7 @@ public class LRUCache {
 		in.addAndGet(1);
 		CacheItem item = cache.get(key);
 		if(item!=null) {
-			if(item.isTimeOut(expiretime)) {
+			if(item.isTimeOut(expiretime.get())) {
 				cache.remove(key);
 			} else {
 				hit.addAndGet(1);
@@ -71,12 +66,20 @@ public class LRUCache {
 	}  
 	
 	public synchronized String toLog(){
-		String r = "";
-		Set<Object> keys = cache.keySet();
-		for(Object ci : keys){
-			r=r+"\t"+ci;
-		}
-		return r;
+		return "in:" + in + " hit:" + hit + "size:" + cache.size();
+	}
+	
+	public synchronized void configOnline(int maxsize,long expiretime){
+		clear();
+		this.maxsize.set(maxsize);
+		this.expiretime.set(expiretime);
+		cache = new LinkedHashMap<Object, CacheItem>(maxsize, 0.75f, true){  
+			private static final long serialVersionUID = 1L;
+			protected boolean removeEldestEntry(Map.Entry<Object, CacheItem> eldest) {  
+				return size() > LRUCache.this.maxsize.get(); 
+			}  
+		};  
+		
 	}
 
 }
