@@ -59,7 +59,7 @@ public class LRUCache {
 				cache.remove(key);
 			} else {
 				hit.addAndGet(1);
-				return item;
+				return item.value;
 			}
 		}
 		return null;
