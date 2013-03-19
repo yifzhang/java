@@ -4,7 +4,7 @@ public class MainTest {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		LRUCache LC = new LRUCache(3, 6000 * 1000);
+		LRUCache LC = new LRUCache("title",3, 6000 * 1000);
 		
 		Task t0 = new Task(LC,9);			 t0.start();
 		Task t1 = new Task(LC,0);			 t1.start();
@@ -23,7 +23,7 @@ public class MainTest {
 			System.out.println(LC.toLog());
 			Thread.sleep(1000);
 			if(i++==3){
-				LC.configOnline(8,1000);
+				LC.configOnline(1000);
 			}
 		}
 		

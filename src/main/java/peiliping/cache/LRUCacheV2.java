@@ -1,15 +1,12 @@
 package peiliping.cache;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
-import com.googlecode.concurrentlinkedhashmap.Weighers;
-
-public class LRUCache {
-
-	public final String title;
+public class LRUCacheV2 {
 
 	public static final long DEFAULT_EXPIRE = 1000 * 60 * 60;
 
@@ -19,27 +16,31 @@ public class LRUCache {
 
 	private AtomicInteger maxsize = new AtomicInteger(0); // cache的大小
 
-	private ConcurrentLinkedHashMap<Object, CacheItem> cache;
+	private LinkedHashMap<Object, CacheItem> cache;
 
 	private AtomicLong in = new AtomicLong(0);
 
 	private AtomicLong hit = new AtomicLong(0);
 
-	public LRUCache(String title) {
-		this(title, DEFAULT_MAXSIZE);
+	public LRUCacheV2() {
+		this(DEFAULT_MAXSIZE);
 	}
 
-	public LRUCache(String title, int maxsize) {
-		this(title, maxsize, DEFAULT_EXPIRE);
+	public LRUCacheV2(int maxsize) {
+		this(maxsize, DEFAULT_EXPIRE);
 	}
 
-	public LRUCache(String title, int maxsize, long expiretime) {
-		this.title = title;
+	public LRUCacheV2(int maxsize, long expiretime) {
 		this.maxsize.set(maxsize);
 		this.expiretime.set(expiretime);
-		cache = new ConcurrentLinkedHashMap.Builder<Object, CacheItem>()
-				.maximumWeightedCapacity(maxsize).weigher(Weighers.singleton())
-				.build();
+		cache = new LinkedHashMap<Object, CacheItem>(maxsize, 0.75f, true) {
+			private static final long serialVersionUID = 1L;
+
+			protected boolean removeEldestEntry(
+					Map.Entry<Object, CacheItem> eldest) {
+				return size() > LRUCacheV2.this.maxsize.get();
+			}
+		};
 	}
 
 	public synchronized void clear() {
@@ -50,14 +51,14 @@ public class LRUCache {
 		}
 	}
 
-	public Object get(Object key) {
+	public synchronized Object get(Object key) {
 		in.addAndGet(1);
 		CacheItem item = cache.get(key);
 		if (item != null) {
 			if (item.isTimeOut(expiretime.get())) {
 				CacheItem ci = cache.remove(key);
 				ci.destroy();
-				ci = null;
+				ci=null;
 			} else {
 				hit.addAndGet(1);
 				return item.getValue();
@@ -66,23 +67,24 @@ public class LRUCache {
 		return null;
 	}
 
-	public void put(Object key, Object value) {
+	public synchronized void put(Object key, Object value) {
 		cache.put(key, new CacheItem(value));
 	}
 
-	public Object remove(Object key) {
+	public synchronized Object remove(Object key) {
 		return cache.remove(key);
 	}
 
 	public String toLog() {
-		return "title:" + title + " in:" + in + " hit:" + hit + " size:" + cache.size();
+		return "in:" + in + " hit:" + hit + "size:" + cache.size();
 	}
 
 	public Set<Object> dumpKey() {
 		return cache.keySet();
 	}
 
-	public void configOnline(long expiretime) {
+	public synchronized void configOnline(int maxsize, long expiretime) {
+		this.maxsize.set(maxsize);
 		this.expiretime.set(expiretime);
 	}
 

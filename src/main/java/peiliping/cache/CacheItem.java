@@ -2,8 +2,9 @@ package peiliping.cache;
 
 public class CacheItem {
 
-	public final Object value; // cache的对象
-	public final long createTime; // 时间戳
+	private  Object value; // cache的对象
+
+	private  long createTime; // 时间戳
 
 	public CacheItem(Object value) {
 		this.value = value;
@@ -12,5 +13,13 @@ public class CacheItem {
 
 	public boolean isTimeOut(long expiretime) {
 		return System.currentTimeMillis() - createTime > expiretime;
+	}
+	
+	public Object getValue() {
+		return value;
+	}
+	
+	public void destroy(){
+		value = null;
 	}
 }
