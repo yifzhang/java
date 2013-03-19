@@ -1,6 +1,7 @@
 package peiliping.cache;
 
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -10,6 +11,8 @@ import com.googlecode.concurrentlinkedhashmap.Weighers;
 public class LRUCache {
 
 	public final String title;
+	
+	public AtomicBoolean IN_USE = new AtomicBoolean(true);
 
 	public static final long DEFAULT_EXPIRE = 1000 * 60 * 60;
 
@@ -51,6 +54,8 @@ public class LRUCache {
 	}
 
 	public Object get(Object key) {
+		if(!IN_USE.get()){return null;}
+		
 		in.addAndGet(1);
 		CacheItem item = cache.get(key);
 		if (item != null) {
@@ -67,6 +72,7 @@ public class LRUCache {
 	}
 
 	public void put(Object key, Object value) {
+		if(!IN_USE.get()){return ;}
 		cache.put(key, new CacheItem(value));
 	}
 
