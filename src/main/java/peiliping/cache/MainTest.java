@@ -23,7 +23,7 @@ public class MainTest {
 			System.out.println(LC.toLog());
 			Thread.sleep(1000);
 			if(i++==3){
-				LC.configOnline(1000);
+				LC.configOnline(5,1000);
 			}
 		}
 		
