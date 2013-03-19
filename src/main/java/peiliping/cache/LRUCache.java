@@ -42,7 +42,7 @@ public class LRUCache {
 				.build();
 	}
 
-	public synchronized void clear() {
+	public void clear() {
 		in.set(0);
 		hit.set(0);
 		if (cache != null) {
@@ -50,7 +50,7 @@ public class LRUCache {
 		}
 	}
 
-	public synchronized Object get(Object key) {
+	public Object get(Object key) {
 		in.addAndGet(1);
 		CacheItem item = cache.get(key);
 		if (item != null) {
@@ -66,11 +66,11 @@ public class LRUCache {
 		return null;
 	}
 
-	public synchronized void put(Object key, Object value) {
+	public void put(Object key, Object value) {
 		cache.put(key, new CacheItem(value));
 	}
 
-	public synchronized Object remove(Object key) {
+	public Object remove(Object key) {
 		return cache.remove(key);
 	}
 
@@ -82,7 +82,7 @@ public class LRUCache {
 		return cache.keySet();
 	}
 
-	public synchronized void configOnline(long expiretime) {
+	public void configOnline(long expiretime) {
 		this.expiretime.set(expiretime);
 	}
 
