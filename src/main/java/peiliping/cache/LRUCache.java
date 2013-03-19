@@ -2,7 +2,6 @@ package peiliping.cache;
 
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
@@ -20,8 +19,6 @@ public class LRUCache {
 
 	private AtomicLong expiretime = new AtomicLong(0); // 有效时间
 
-	private AtomicInteger maxsize = new AtomicInteger(0); // cache的大小
-
 	private ConcurrentLinkedHashMap<Object, CacheItem> cache;
 
 	private AtomicLong in = new AtomicLong(0);
@@ -38,7 +35,6 @@ public class LRUCache {
 
 	public LRUCache(String title, int maxsize, long expiretime) {
 		this.title = title;
-		this.maxsize.set(maxsize);
 		this.expiretime.set(expiretime);
 		cache = new ConcurrentLinkedHashMap.Builder<Object, CacheItem>()
 				.maximumWeightedCapacity(maxsize).weigher(Weighers.singleton())
@@ -88,8 +84,9 @@ public class LRUCache {
 		return cache.keySet();
 	}
 
-	public void configOnline(long expiretime) {
+	public void configOnline(long expiretime,int maxsize) {
 		this.expiretime.set(expiretime);
+		this.cache.setCapacity(maxsize);
 	}
 
 }
