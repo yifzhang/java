@@ -43,7 +43,7 @@ public class LRUCacheV2 {
 		};
 	}
 
-	public synchronized void clear() {
+	public void clear() {
 		in.set(0);
 		hit.set(0);
 		if (cache != null) {
@@ -51,7 +51,7 @@ public class LRUCacheV2 {
 		}
 	}
 
-	public synchronized Object get(Object key) {
+	public Object get(Object key) {
 		in.addAndGet(1);
 		CacheItem item = cache.get(key);
 		if (item != null) {
@@ -67,11 +67,11 @@ public class LRUCacheV2 {
 		return null;
 	}
 
-	public synchronized void put(Object key, Object value) {
+	public void put(Object key, Object value) {
 		cache.put(key, new CacheItem(value));
 	}
 
-	public synchronized Object remove(Object key) {
+	public  Object remove(Object key) {
 		return cache.remove(key);
 	}
 
@@ -83,8 +83,7 @@ public class LRUCacheV2 {
 		return cache.keySet();
 	}
 
-	public synchronized void configOnline(int maxsize, long expiretime) {
-		this.maxsize.set(maxsize);
+	public void configOnline(long expiretime) {
 		this.expiretime.set(expiretime);
 	}
 
