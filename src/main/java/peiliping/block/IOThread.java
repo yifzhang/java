@@ -1,23 +1,24 @@
 package peiliping.block;
 
+import peiliping.block.MainThread.LOCK;
+
 public abstract class IOThread implements Runnable{
 	
-	private Object lock;
+	private LOCK lock;
 	
-	public IOThread(Object lock ) {
-		this.lock = lock ;
+	public IOThread(MainThread mt) {
+		this.lock = mt.getLock() ;
 	}
 	
 	@Override
 	public void run() {
-		
 		handle();
-		
 		synchronized (lock) {
-			lock.notifyAll();
+			lock.finished.set(true);
+			lock.notify();
 		}
 	}
 	
-	public abstract void handle();
+	protected abstract void handle();
 	
 }
