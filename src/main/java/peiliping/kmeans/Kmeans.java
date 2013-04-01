@@ -37,6 +37,7 @@ public class Kmeans<T extends IItem> {
      */
     @SuppressWarnings("unchecked")
     public Result run() throws InstantiationException, IllegalAccessException {  
+    	(clazz.newInstance()).prehandle(items);
     	seedList = new ArrayList<IItem>(items.subList(0,k)); //默认选几个数据点当中心  
 		ArrayList<IItem>[] results = new ArrayList[k];  
         boolean centerChanged = true;  

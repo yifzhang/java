@@ -26,7 +26,6 @@ public class Main {
 		}
 		reader.close();
 		
-		(new Item()).prehandle(list);
 		Kmeans<Item> kmeans = new Kmeans<Item>(list,12,Item.class);
 		Result R = kmeans.run();
 		List<Item>[] results = R.classifyResults; 
