@@ -2,9 +2,9 @@ package peiliping.cache;
 
 public class CacheItem {
 
-	private  Object value; // cache的对象
+	private Object value; // cache的对象
 
-	private  long createTime; // 时间戳
+	private final long createTime; // 时间戳
 
 	public CacheItem(Object value) {
 		this.value = value;
