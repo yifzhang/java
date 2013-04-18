@@ -92,7 +92,7 @@ public class Kmeans<T extends IItem> {
 		double[] ds = new double[fieldnum];
 		double[] tmpd;
 		for (IItem vo : ps) {
-			tmpd = vo.getData();
+			tmpd = vo.getDatas();
 			for (int i = 0; i < fieldnum; i++) {
 				ds[i] += tmpd[i];
 			}

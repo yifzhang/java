@@ -22,7 +22,7 @@ public abstract class IItem	{
 	 * 将数据以数组的形式返回
 	 * @return
 	 */
-	public abstract double[] getData();
+	public abstract double[] getDatas();
 	
 	/**
 	 * 维度的个数
