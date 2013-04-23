@@ -69,6 +69,13 @@ public class LRUCache {
 
 	public void put(Object key, Object value) {
 		if(!IN_USE.get()){return ;}
+		if(cache.size() > 3 * cache.capacity()){
+		 /**
+		  * 在特别高的并发下，异步的删除跟不上put的速度会导致cache的体积非常大甚至导致JVM OOM掉
+		  * 所以在这里做个判断限制一下，起到一个保护的作用。 
+		  */
+			return ;
+		}	
 		cache.put(key, new CacheItem(value));
 	}
 
