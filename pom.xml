@@ -46,5 +46,15 @@
 			<artifactId>ganymed-ssh2</artifactId>
 			<version>build210</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>hessian</groupId>
+			<artifactId>hessian</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 	</dependencies>
 </project>
