@@ -47,5 +47,7 @@ public class GJson {
 			jo.get("d");
 		}
 		System.out.println(System.currentTimeMillis()-t);
+		
+		JSON.toJSON(t);
 	}
 }

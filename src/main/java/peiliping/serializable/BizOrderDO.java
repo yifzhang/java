@@ -18,8 +18,7 @@ public class BizOrderDO implements Serializable {
 //	private long id8 = 0 ; //14
 //	private long id9 = 0 ; //14
 //	
-//	
-	private String name ="1231231231"; //8
+	public String name ="1231231231"; //8
 //	
 //	private int status =1231231231; //14
 //	private int status1 =1; //14
