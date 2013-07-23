@@ -77,16 +77,6 @@
 			<version>3.3.1</version>
 		</dependency>
 		<dependency>
-			<groupId>com.taobao.sketch</groupId>
-			<artifactId>sketch-webx3</artifactId>
-			<version>4.4.6-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.taobao.sketch</groupId>
-			<artifactId>sketch-framework</artifactId>
-			<version>4.4.6-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>0.11.8</version>
