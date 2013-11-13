@@ -106,5 +106,15 @@
 			<artifactId>logback-classic</artifactId>
 			<version>0.9.29</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.2.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hive</groupId>
+			<artifactId>hive-exec</artifactId>
+			<version>0.12.0</version>
+		</dependency>
 	</dependencies>
 </project>

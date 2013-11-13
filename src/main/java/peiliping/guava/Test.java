@@ -1,6 +1,7 @@
 package peiliping.guava;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.base.Function;
@@ -36,10 +37,17 @@ public class Test {
 			}
 	    });
 	    
-	    for(String t : newlist){
-	    	System.out.println(t);
+//	    for(String t : newlist){
+//	    	System.out.println(t);
+//	    }
+	    
+	    Iterator<DO> i =  a.iterator();
+	    while(i.hasNext()){
+	    	DO t = i.next();
+	    	i.remove();
 	    }
 	    
+	    System.out.println(a.size());
 	    
 	}
 

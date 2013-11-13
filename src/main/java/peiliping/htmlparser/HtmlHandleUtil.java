@@ -1,7 +1,5 @@
 package peiliping.htmlparser;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,14 +43,6 @@ public class HtmlHandleUtil {
 		TagNode tagNode = new TagNode();
 		tagNode.setText(n.toHtml());
 		return tagNode.getAttribute(attributeName);
-	}
-	
-	public static void writefile(String content, String localfile) throws IOException {
-		FileWriter fw = null;
-		fw = new FileWriter(localfile, true);
-		fw.append(content);
-		fw.append("\n");
-		fw.close();
 	}
 	
 	static{
