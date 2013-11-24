@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		int begin = 1, end = 100;
-		String website = "http://bbs.xxxxxxxxxx.net/";
+		String website = "http://bbs.xxxxx.net/";
 		String url = website + "forum.php?mod=forumdisplay&fid=" + "2" + "&page=";
 
 		try {
@@ -28,8 +28,8 @@ public class Main {
 					String result = title + "\t" + href ;
 					logger.warn(result);
 				}
-				Thread.sleep(800);
-//				System.out.println(i);
+//				Thread.sleep(800);
+				System.out.println(i);
 			}
 		} catch (Throwable e) {
 			e.printStackTrace();
