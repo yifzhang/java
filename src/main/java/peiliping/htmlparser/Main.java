@@ -1,5 +1,8 @@
 package peiliping.htmlparser;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.util.NodeList;
@@ -12,9 +15,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		int begin = 1, end = 100;
+		int begin = 1, end = 1000;
 		String website = "http://bbs.xxxxx.net/";
-		String url = website + "forum.php?mod=forumdisplay&fid=" + "2" + "&page=";
+		String url = website + "forum.php?mod=forumdisplay&fid=" + "2" + "&orderby=dateline&page=";
 
 		try {
 			for (int i = begin; i <= end; i++) {
@@ -25,6 +28,7 @@ public class Main {
 					Node node = titlelist.elementAt(j);
 					String title = node.toPlainTextString().replaceAll(" ", "");
 					String href = website + HtmlHandleUtil.getAttributeValueFromNode("href",node);
+					href = href.replaceAll("amp;", "");
 					String result = title + "\t" + href ;
 					logger.warn(result);
 				}
