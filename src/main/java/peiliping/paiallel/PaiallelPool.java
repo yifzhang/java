@@ -36,7 +36,6 @@ public class PaiallelPool<R> {
 	/**
 	 * 共用线程池的
 	 * 
-	 * @param listCallable
 	 * @param timeout
 	 * @param threadsNum
 	 */
