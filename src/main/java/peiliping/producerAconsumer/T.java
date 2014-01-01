@@ -25,6 +25,7 @@ public class T {
 			}
 		}	
 		);
+		
 		while(true){
 			System.out.println(S.size());
 			Thread.sleep(1000);
