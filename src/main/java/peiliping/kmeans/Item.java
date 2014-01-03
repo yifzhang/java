@@ -1,46 +1,33 @@
 package peiliping.kmeans;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class Item extends IItem {
+import lombok.Getter;
+import lombok.Setter;
 
+public abstract class Item extends IItem {
+
+	@Getter
+	@Setter
 	private long id;
-
+	@Getter
+	@Setter
 	private String name;
-
+	@Getter
+	@Setter
 	private double[] datas;
-
-	public double[] getDatas() {
-		return datas;
-	}
-
-	public void setDatas(double[] datas) {
-		this.datas = datas;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Override
 	public boolean equals(IItem obj) {
-		if (obj == null || getDimensionNum() != ((Item) obj).getDimensionNum()) {
+		if (obj == null || getDimensionNum() != obj.getDimensionNum()) {
 			return false;
 		}
-
-		return false;
+		for(int i=0; i<getDimensionNum() ;i++){
+			if(datas[i] != obj.getDatas()[i])
+				return false ;
+		}
+		return true;
 	}
 
 	@Override
@@ -54,24 +41,19 @@ public class Item extends IItem {
 	}
 
 	@Override
-	public int getDimensionNum() {
-		return datas != null ? datas.length : 0;
-	}
-
-	@Override
 	public void initPoint(double[] ds) {
 		this.datas = ds;
 	}
 
 	@Override
 	public String toLog() {
-		return "";
+		return "id:" + id + " name:" + name + " data:" + Arrays.toString(datas) ;
 	}
 
 	@Override
 	public void prehandle(List<IItem> items) {
 
-		double[] maxs = getArray(getDimensionNum(), 0);
+		double[] maxs = getArray(getDimensionNum(), Double.MIN_VALUE);
 		double[] minxs = getArray(getDimensionNum(), Double.MAX_VALUE);
 
 		Item p;

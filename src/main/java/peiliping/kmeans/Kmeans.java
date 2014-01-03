@@ -13,19 +13,19 @@ public class Kmeans<T extends IItem> {
     /** 
      * 数据类别 
      */    
-    private Class<T> clazz ;  
+    private Class<? extends IItem> clazz ;  
   
     /** 
      * 中心点集合 
      */  
-    private ArrayList<IItem> seedList;  
+    private List<IItem> seedList;  
 
     /** 
      * 分类数 
      */  
     private int k = 1;  
 
-    public Kmeans(List<IItem> list, int k,Class<T> clazz) {  
+    public Kmeans(List<IItem> list, int k,Class<? extends IItem> clazz) {  
         this.items = list;  
         this.k = k;
         this.clazz = clazz;
@@ -39,7 +39,7 @@ public class Kmeans<T extends IItem> {
     public Result run() throws InstantiationException, IllegalAccessException {  
     	(clazz.newInstance()).prehandle(items);
     	seedList = new ArrayList<IItem>(items.subList(0,k)); //默认选几个数据点当中心  
-		ArrayList<IItem>[] results = new ArrayList[k];  
+		List<IItem>[] results = new ArrayList[k];  
         boolean centerChanged = true;  
         while (centerChanged) {  
             centerChanged = false; 
@@ -57,6 +57,7 @@ public class Kmeans<T extends IItem> {
             double min_dist=Double.MAX_VALUE,tmp_dist;
             for (int i = 0; i < items.size(); i++) {  
             	tmp_item = items.get(i);
+            	min_dist=Double.MAX_VALUE;
                 for (int j = 0; j < seedList.size(); j++) {  
                     tmp_dist = seedList.get(j).distance(tmp_item);  
                     if(tmp_dist<min_dist){
@@ -77,6 +78,7 @@ public class Kmeans<T extends IItem> {
                     seedList.set(i, t_new);  
                 }  
             }  
+            System.out.println("==");
         }  
         return new Result(true, results, seedList);  
     }    
@@ -104,7 +106,7 @@ public class Kmeans<T extends IItem> {
 		return t;
 	}
      
-    public class Result{
+    public class Result {
     	/**
     	 * 处理结果
     	 */
@@ -112,13 +114,13 @@ public class Kmeans<T extends IItem> {
     	/**
     	 * 数据分组后的结果
     	 */
-    	public ArrayList<IItem>[] classifyResults ;
+    	public List<IItem>[] classifyResults ;
     	/**
     	 * 中心点集合
     	 */
-    	public ArrayList<IItem> cores ;
+    	public List<IItem> cores ;
 
-    	public Result(boolean success,ArrayList<IItem>[] classifyResults,ArrayList<IItem> cores){
+    	public Result(boolean success,List<IItem>[] classifyResults,List<IItem> cores){
     		this.success = success;
     		this.classifyResults = classifyResults;
     		this.cores = cores;
