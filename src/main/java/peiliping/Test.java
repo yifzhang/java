@@ -1,18 +1,13 @@
 package peiliping;
 
+import java.util.Arrays;
+
 public class Test {
-	
-	
-	public static String a = "aBC" ;
 	
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 	
-		
-		Class c = Class.forName("peiliping.Test") ;
-		
-		Test t = (Test) c.newInstance();
-		
-		System.out.println(t.a);
+		double[] sss = {12,3,4};
+		System.out.println("sss:" + Arrays.toString(sss));
 		
 	}
 }

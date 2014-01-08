@@ -42,6 +42,7 @@ public class Kmeans<T extends IItem> {
     public Result run() throws InstantiationException, IllegalAccessException {  
     	(clazz.newInstance()).prehandle(items);
     	seedList = new ArrayList<T>(items.subList(0,k)); //默认选几个数据点当中心  
+		@SuppressWarnings("unchecked")
 		List<T>[] results = new ArrayList[k];  
         boolean centerChanged = true;  
         while (centerChanged) {  
@@ -118,7 +119,7 @@ public class Kmeans<T extends IItem> {
 		T p =  null ;
 		while ((tempString = reader.readLine()) != null) {
 			p = clazz.newInstance();
-			double[] s = {0,0,0};
+			double[] s = new double[dimensionNum];
 			for(int i=0; i <dimensionNum ;i++){
 				s[i]=Double.parseDouble(tempString.split(split)[i]);
 			}
