@@ -4,6 +4,8 @@ import java.util.List;
 
 public abstract class IItem	{
 	
+	public IItem(){}
+	
 	/**
 	 * 比较两个数据是不是相等
 	 * @param obj
@@ -46,6 +48,6 @@ public abstract class IItem	{
 	 * 归一化处理
 	 * @param tmp_items
 	 */
-	public abstract void prehandle(List<IItem> items);
+	public abstract void prehandle(List<? extends IItem> items);
 	
 }

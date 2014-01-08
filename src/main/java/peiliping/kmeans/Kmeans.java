@@ -1,5 +1,9 @@
 package peiliping.kmeans;
 	
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,24 +12,24 @@ public class Kmeans<T extends IItem> {
 	/** 
      * 所有数据列表 
      */   
-    private List<IItem> items ;  
+    private List<T> items ;  
   
     /** 
      * 数据类别 
      */    
-    private Class<? extends IItem> clazz ;  
+    private Class<T> clazz ;  
   
     /** 
      * 中心点集合 
      */  
-    private List<IItem> seedList;  
+    private List<T> seedList;  
 
     /** 
      * 分类数 
      */  
     private int k = 1;  
 
-    public Kmeans(List<IItem> list, int k,Class<? extends IItem> clazz) {  
+    public Kmeans(List<T> list, int k,Class<T> clazz) {  
         this.items = list;  
         this.k = k;
         this.clazz = clazz;
@@ -35,24 +39,23 @@ public class Kmeans<T extends IItem> {
      * 执行聚类运算
      * @return
      */
-    @SuppressWarnings("unchecked")
     public Result run() throws InstantiationException, IllegalAccessException {  
     	(clazz.newInstance()).prehandle(items);
-    	seedList = new ArrayList<IItem>(items.subList(0,k)); //默认选几个数据点当中心  
-		List<IItem>[] results = new ArrayList[k];  
+    	seedList = new ArrayList<T>(items.subList(0,k)); //默认选几个数据点当中心  
+		List<T>[] results = new ArrayList[k];  
         boolean centerChanged = true;  
         while (centerChanged) {  
             centerChanged = false; 
             //清空结果数组
             for (int i = 0; i < k; i++) {  
                 if(results[i]==null){
-                	results[i]=new ArrayList<IItem>();
+                	results[i]=new ArrayList<T>();
                 }else{
                 	results[i].clear();
                 } 
             }  
             //运算每个数据点与种子的距离，投放到距离近的种子对应的结果集中
-        	IItem tmp_item;
+        	T tmp_item;
         	int min_index=0;
             double min_dist=Double.MAX_VALUE,tmp_dist;
             for (int i = 0; i < items.size(); i++) {  
@@ -72,7 +75,7 @@ public class Kmeans<T extends IItem> {
             	if(results[i]==null || results[i].size()==0){
             		continue;
             	}
-            	IItem t_new = findNewCenter(results[i]);  
+            	T t_new = findNewCenter(results[i]);  
                 if (!seedList.get(i).equals(t_new)){  
                     centerChanged = true;  
                     seedList.set(i, t_new);  
@@ -88,12 +91,12 @@ public class Kmeans<T extends IItem> {
      * @param ps 
      * @return 
      */  
-	public IItem findNewCenter(List<IItem> ps) throws InstantiationException,IllegalAccessException {
-		IItem t = clazz.newInstance();
+	public T findNewCenter(List<T> ps) throws InstantiationException,IllegalAccessException {
+		T t = clazz.newInstance();
 		int fieldnum = t.getDimensionNum();
 		double[] ds = new double[fieldnum];
 		double[] tmpd;
-		for (IItem vo : ps) {
+		for (T vo : ps) {
 			tmpd = vo.getDatas();
 			for (int i = 0; i < fieldnum; i++) {
 				ds[i] += tmpd[i];
@@ -105,6 +108,26 @@ public class Kmeans<T extends IItem> {
 		t.initPoint(ds);
 		return t;
 	}
+	
+	public void loadDataFile(String filepath,int dimensionNum,Class<T> clazz,String split)
+			throws NumberFormatException, IOException, InstantiationException, IllegalAccessException{
+		List<T> list = new ArrayList<T>();
+		File file = new File(filepath);
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		String tempString = null;
+		T p =  null ;
+		while ((tempString = reader.readLine()) != null) {
+			p = clazz.newInstance();
+			double[] s = {0,0,0};
+			for(int i=0; i <dimensionNum ;i++){
+				s[i]=Double.parseDouble(tempString.split(split)[i]);
+			}
+			p.initPoint(s);
+			list.add(p);
+		}
+		reader.close();
+		items = list ;
+	}
      
     public class Result {
     	/**
@@ -114,13 +137,13 @@ public class Kmeans<T extends IItem> {
     	/**
     	 * 数据分组后的结果
     	 */
-    	public List<IItem>[] classifyResults ;
+    	public List<T>[] classifyResults ;
     	/**
     	 * 中心点集合
     	 */
-    	public List<IItem> cores ;
+    	public List<T> cores ;
 
-    	public Result(boolean success,List<IItem>[] classifyResults,List<IItem> cores){
+    	public Result(boolean success,List<T>[] classifyResults,List<T> cores){
     		this.success = success;
     		this.classifyResults = classifyResults;
     		this.cores = cores;

@@ -10,7 +10,7 @@ public class Item3 extends Item {
 	}
 	
 	@Override
-	public void prehandle(List<IItem> items) {
+	public void prehandle(List<? extends IItem> items) {
 		return ;
 	}
 

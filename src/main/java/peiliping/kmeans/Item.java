@@ -51,7 +51,7 @@ public abstract class Item extends IItem {
 	}
 
 	@Override
-	public void prehandle(List<IItem> items) {
+	public void prehandle(List<? extends IItem> items) {
 
 		double[] maxs = getArray(getDimensionNum(), Double.MIN_VALUE);
 		double[] minxs = getArray(getDimensionNum(), Double.MAX_VALUE);
