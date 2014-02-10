@@ -1,13 +1,14 @@
 package peiliping;
 
-import java.util.Arrays;
+import java.util.Random;
+
 
 public class Test {
 	
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public static void main(String[] args) {
 	
-		double[] sss = {12,3,4};
-		System.out.println("sss:" + Arrays.toString(sss));
-		
+		Random random=new Random();
+		for(int i=0;i<100;i++)
+		System.out.println(random.nextInt(5));
 	}
 }
