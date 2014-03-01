@@ -1,14 +1,15 @@
 package peiliping;
 
-import java.util.Random;
 
 
 public class Test {
 	
 	public static void main(String[] args) {
-	
-		Random random=new Random();
-		for(int i=0;i<100;i++)
-		System.out.println(random.nextInt(5));
+		
+		long t = System.currentTimeMillis();
+		
+		System.out.println((t+1000*60*60*8)/86400000);
+		System.out.println((t-1000*60*60*4)/86400000);
+		
 	}
 }
