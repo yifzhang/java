@@ -141,5 +141,10 @@
 			<artifactId>tomcat-catalina</artifactId>
 			<version>7.0.42</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>4.1.1.4</version>
+		</dependency>
 	</dependencies>
 </project>

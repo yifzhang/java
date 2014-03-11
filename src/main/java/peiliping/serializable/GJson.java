@@ -1,14 +1,12 @@
 package peiliping.serializable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.LongSerializationPolicy;
-import com.google.gson.reflect.TypeToken;
 
 public class GJson {
 
@@ -42,9 +40,9 @@ public class GJson {
 //
 //		t = System.currentTimeMillis();
 //		for (int i = 0; i < 10000; i++) {
-//			String Json1 = "{\"d\":\"4\",\"b\":\"2\",\"c\":\"3\",\"a\":\"1\"}";
-//			JSONObject jo = JSON.parseObject(Json1);
-//			jo.get("d");
+			String Json1 = "{\"d\":\"4\",\"b\":\"2\",\"c\":\"3\",\"a\":\"1\"}";
+			Map jo = JSON.parseObject(Json1,Map.class);
+			System.out.println(jo.get("d"));
 //		}
 //		System.out.println(System.currentTimeMillis()-t);		
 //		JSON.toJSON(t);
@@ -60,18 +58,18 @@ public class GJson {
 //		 System.out.println(Json);
 		
 		
-		
-		List<Map<String,String>> l = new ArrayList<Map<String,String>>();
-		Map<String,String> m = new HashMap<String, String>();
-		m.put("match_expression", ".*\\.(ace|arj|ini|txt|udl|plist|css|gif|ico|jpe?g|js|png|swf|woff|caf|aiff|m4v|mpe?g|mp3|mp4|mov)$");
-		m.put("each_segment", "false");
-		m.put("terminate_chain", "true");
-		m.put("replacement", null);
-		m.put("eval_order", "1000");
-		m.put("replace_all", "false");
-		m.put("ignore", "true");
-		l.add(m);
-		String Json = GSON.toJson(l, new TypeToken<List<Map<String, String>>>() { }.getType());
-		System.out.println(Json);
+//		
+//		List<Map<String,String>> l = new ArrayList<Map<String,String>>();
+//		Map<String,String> m = new HashMap<String, String>();
+//		m.put("match_expression", ".*\\.(ace|arj|ini|txt|udl|plist|css|gif|ico|jpe?g|js|png|swf|woff|caf|aiff|m4v|mpe?g|mp3|mp4|mov)$");
+//		m.put("each_segment", "false");
+//		m.put("terminate_chain", "true");
+//		m.put("replacement", null);
+//		m.put("eval_order", "1000");
+//		m.put("replace_all", "false");
+//		m.put("ignore", "true");
+//		l.add(m);
+//		String Json = GSON.toJson(l, new TypeToken<List<Map<String, String>>>() { }.getType());
+//		System.out.println(Json);
 	}
 }
