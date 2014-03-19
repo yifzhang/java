@@ -47,11 +47,6 @@
 			<version>2.6</version>
 		</dependency>
 		<dependency>
-			<groupId>apache-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.1</version>
-		</dependency>
-		<dependency>
 			<groupId>ch.ethz.ganymed</groupId>
 			<artifactId>ganymed-ssh2</artifactId>
 			<version>build210</version>
@@ -62,9 +57,9 @@
 			<version>1.7</version>
 		</dependency>
 		<dependency>
-			<groupId>hessian</groupId>
+			<groupId>com.caucho</groupId>
 			<artifactId>hessian</artifactId>
-			<version>3.2.1</version>
+			<version>4.0.33</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
